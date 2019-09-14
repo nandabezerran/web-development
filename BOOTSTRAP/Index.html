@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <title>Cadastro de Alunos</title>
+  </head>
+
+  <body>
+    
+      <div class = "jumbotron">
+          <div class="container">
+            <h1 class ="display-4">Cadastro de Alunos</h1>
+          </div>
+      </div>
+    
+
+    <!-- FORM -->
+    <div class="container" id="container00">
+      <div class="card-header" id="card">
+        Formulário
+        <i class="fa fa-question-circle" onclick="showAutor()"></i>
+        </div>
+      <div class="container" id="container01">
+
+        <form id="form">
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="matricula">Matrícula</label>
+              <input type="text" class="form-control" id="matricula" placeholder="Matrícula" pattern=[0-9]* title="Apenas números" oninvalid="InvalidMsg(this);" oninput="InvalidMsg(this);" required  minlength="6" maxlength="6" >
+            </div>
+            <div class="form-group col-md-8">
+              <label for="nome">Nome do Aluno</label>
+              <input type="nome" class="form-control" id="nome" placeholder="Nome do Aluno" oninvalid="InvalidMsg(this);" oninput="InvalidMsg(this);" required minlength="3">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-4">
+              <label for="data">Data de Nascimento</label>
+              <input type="date" class="form-control" id="data" placeholder="00/00/0000" required>
+            </div>
+            <div class="form-group col-md-8">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" id="email" placeholder="nome@email.com" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-1">
+              <label for="ddd">DDD</label>
+              <input type="text" class="form-control" id="ddd" placeholder = "(000)" pattern=[0-9]* title="Apenas números" required minlength="3" maxlength="3">
+            </div>
+            <div class="form-group col-md-4">
+              <label for="numero">Numero</label>
+              <input type ="text"id="numero" class="form-control" id = "numero" pattern=[0-9]* title="Apenas números" placeholder="9-9999-9999" required minlength="9" maxlength="9">   
+            </div>
+            <div class="form-group col-md-2">
+              <label for="operadora">Operadora</label>
+              <select type="text" class="form-control" id="operadora" required>
+                <option>Oi</option>
+                <option>Tim</option>
+                <option>Claro</option>
+                <option>Vivo</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group col-md-2">
+              <label for="Campi">Campi</label>
+              <select type="text" class="form-control" id="campi" required>
+                <option value="Pici">Pici</option>
+                <option value="Benfica">Benfica</option>
+                <option value="Porangabussu">Porangabussu</option>
+              </select>
+            </div>
+            <div class="form-group col-md-2">
+              <label for="curso">Curso</label>
+              <select type="text" class="form-control" id="curso" required>
+                <option>Computação</option>
+                <option>Matemática</option>
+                <option>Geografia</option>
+              </select>
+            </div>
+          </div>
+          <button type="reset" class="btn btn-primary" id="reset">Limpar</button>
+          <button type="submit" class="btn btn-primary" id="submit">Inserir</button>
+        </form>
+      </div>
+    </div>
+
+    <hr></hr>
+
+    <div class="container">
+      <table id="tabela" width=100% border="0">
+        <tr>
+          <th>Nº de Matrícula </th>
+          <th>Nome </th>
+          <th>Ações </th>
+        </tr>
+      </table>
+    </div>
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Confirmação</h5>
+          <span class="close">&times;</span>
+        </div>
+        <div class="modal-body">
+          <p>Deseja realmente deletar?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" id="cancelar">Cancelar</button>
+          <button type="submit" class="btn btn-danger" id="deletar">Deletar</button>
+        </div>        
+      </div>
+    </div> 
+
+    <!-- The Modal -->
+    <div id="myModal2" class="modal">
+
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Erro</h5>
+          <span class="close1">&times;</span>
+        </div>
+        <div class="modal-body">
+          <p>Matricula ja existe.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" id="cancelar1">Ok</button>
+        </div>        
+      </div>
+    </div> 
+
+    <!-- The Modal -->
+    <div id="myModal3" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Autor</h5>
+          <span class="close2">&times;</span>
+        </div>
+        <div class="modal-body">
+          <p><img src="img/Autor.jpg" id="autor" />Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" id="cancelar3">Fechar</button>
+        </div>        
+      </div>
+    </div> 
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/functions.js"></script>
+  </body>
+</html>
