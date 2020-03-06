@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <title>Cadastro de Alunos</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <div id ="app">
+        <div class = "jumbotron">
+          <div class="container">
+            <h1 class ="display-4">Cadastro de Alunos</h1>
+          </div>
+        </div>
+        <div class="container" id="container00">
+          <div class="card-header" id="card">
+            Formulário
+            <i class="fa fa-question-circle" data-toggle="modal" data-target="#myModal3"></i>
+          </div>
+          <div class="container" id="container01">
+            <form v-on:submit.prevent ref="form">
+              <div class="form-row">
+                <div class="form-group col-md-4">
+                  <label for="matricula">Matrícula</label>
+                  <input type="text" class="form-control" v-model="matricula" id="matricula" placeholder="Matrícula" pattern=[0-9]* title="Apenas números" required  minlength="6" maxlength="6" >
+                </div>
+                <div class="form-group col-md-8">
+                  <label for="nome">Nome do Aluno</label>
+                  <input type="nome" v-model="nome" class="form-control" id="nome" placeholder="Nome do Aluno" required minlength="3">
+                </div>
+              </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-4">
+                <label for="dataNas">Data de Nascimento</label>
+                <input type="date" v-model="dataNas"class="form-control" id="dataNas" placeholder="00/00/0000" required>
+              </div>
+              <div class="form-group col-md-8">
+                <label for="email">Email</label>
+                <input type="email" v-model="email" class="form-control" id="email" placeholder="nome@email.com" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group col-md-1">
+                <label for="ddd">DDD</label>
+                <input type="text" class="form-control" id="ddd" v-model = "ddd" placeholder = "(000)" pattern=[0-9]* title="Apenas números" required minlength="3" maxlength="3">
+              </div>
+              <div class="form-group col-md-4">
+                <label for="numero">Numero</label>
+                <input type ="text"id="numero" v-model="numero" class="form-control" id = "numero" pattern=[0-9]* title="Apenas números" placeholder="9-9999-9999" required minlength="9" maxlength="9">   
+              </div>
+              <div class="form-group col-md-2">
+                <label for="operadora">Operadora</label>
+                <select type="text" v-model="operadora" class="form-control" id="operadora" required>
+                  <option>Oi</option>
+                  <option>Tim</option>
+                  <option>Claro</option>
+                  <option>Vivo</option>
+                </select>
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group col-md-2">
+                <label for="Campus">Campus</label>
+                <select type="text" class="form-control" v-model="campus" id="campus" required>
+                  <option value="Pici">Pici</option>
+                  <option value="Benfica">Benfica</option>
+                  <option value="Porangabussu">Porangabussu</option>
+                </select>
+              </div>
+              <div class="form-group col-md-2">
+                <label for="curso">Curso</label>
+                <select v-model="curso" class="form-control" required>
+                  <option v-for="curso in lista[campus]">{{curso}}</option>
+                </select>
+              </div>
+            </div>  
+            <button type="reset" class="btn btn-primary" id="reset" v-on:click=limpar()>Limpar</button>
+            <button type="submit" class="btn btn-primary" id="submit" v-on:click=addAluno()>Inserir</button>
+            </form>
+          </div>
+        </div>
+        <hr></hr>
+        <tabela :aluno="alunos"></tabela>
+        <div id="myModal3" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Autor</h5>
+            <span class="close2"  data-dismiss="modal">&times;</span>
+          </div>
+          <div class="modal-body">
+            <p><img src="img/Autor.jpg" id="autor" />Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" id="cancelar3" data-dismiss="modal">Fechar</button>
+          </div>        
+        </div>
+        </div> 
+
+        <!-- The Modal -->
+        <div id="myModal2" class="modal">
+
+        <!-- Modal content -->
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Erro</h5>
+            <span class="close1">&times;</span>
+          </div>
+          <div class="modal-body">
+            <p>Matricula ja existe.</p>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" id="cancelar1" data-dismiss="modal">Ok</button>
+          </div>        
+        </div>
+        </div> 
+
+        <div id="myModal" class="modal">
+        <!-- Modal content -->
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Confirmação</h5>
+              <span class="close" data-dismiss="modal">&times;</span>
+            </div>
+            <div class="modal-body">
+              <p>Deseja realmente deletar?</p>
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" id="cancelar" data-dismiss="modal">Cancelar</button>
+              <button class="btn btn-danger" id="deletar" data-dismiss="modal" v-on:click="removeAluno()" >Deletar</button>
+            </div>        
+          </div>
+        </div> 
+    </div>
+  </div>
+
+
+   <template id="tabela">
+      <div class="container">
+        <table class="table table-bordered table-striped" id="tabela">
+          <thead>
+            <th>
+              <strong>Matrícula</strong>
+            </th>
+            <th>
+              <strong>Nome</strong>
+            </th>
+            <th>
+              <strong>Ações</strong>
+            </th>
+          </thead>
+          <tbody v-if="aluno.length != 0">
+            <tr v-for="a in aluno">
+              <td >{{a.matricula}}</td>
+              <td >{{a.nome}}</td>
+              <td><button class="btn btn-danger" data-toggle="modal" data-target="#myModal" v-on:click="salvarMat(a.matricula)">remover</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+   </template>
+
+    <script>
+      var mat = '';
+
+      Vue.component('tabela', {
+        template: "#tabela",
+        props: ['aluno'],
+        methods: {
+          salvarMat(matricula){
+            mat = matricula;
+          }
+        }
+      });
+
+      var app = new Vue({
+        el:"#app",
+        data: {
+            matricula: '',
+            nome: '',
+            dataNas: '',
+            email: '',
+            numero: '',
+            ddd: '',
+            operadora: '',
+            campus: '',
+            curso: '',
+            alunos: [],
+            url: "http://localhost:3000/api/alunos",
+            lista: {
+            'Porangabussu': ['Medicina', 'Farmácia', 'Odontologia'],
+            'Pici': ['Computação', 'Geologia', 'Geografia'],
+            'Benfica': ['Filosofia', 'Letras', 'Pedagogia']
+          }    
+        },
+        mounted() {
+          vm = this;
+          axios.get(this.url).then(function (r) {
+            vm.alunos= r.data;
+          }).catch(function (error) {console.log(error);
+          });
+        },
+        methods: {
+          addAluno() {
+            let newAluno= {'matricula': this.matricula,
+                'nome': this.nome,
+                'dataNas': this.dataNas,
+                'email': this.email,
+                'ddd': this.ddd,
+                'numero': this.numero,
+                'operadora': this.operadora,
+                'campus': this.campus,
+                'curso': this.curso};
+            axios.post(this.url, newAluno).then(function (r) {
+              window.location.replace("index.html");
+            }).catch(function (error) {
+              $('#myModal2').modal('show');
+              console.log('Matricula ja existe');
+            });
+          },
+          removeAluno() {
+            axios.delete(this.url+ "/" + mat).then(function (r) {
+              window.location.replace('index.html')}).catch(function (error) {
+                console.log(error);
+              });
+          },
+          limpar(){
+            this.matricula = ''
+            this.nome = ''
+            this.dataNas = ''
+            this.email = ''
+            this.ddd = ''
+            this.numero = ''
+            this.operadora = ''
+            this.campi = 'Pici'
+            this.curso = ['Computação', 'Geologia', 'Geografia']
+          }  
+        }
+      });
+    </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+  </body>
+</html>

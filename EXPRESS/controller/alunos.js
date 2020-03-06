@@ -5,7 +5,7 @@ var campus = [];
 //{
 //	"matricula": "388836",
 //	"nome": "Fernanda Bezerra",
-//	"dataNas": "18/07/1997",
+//	"dataNas": "07/18/1997",
 //	"email": "fbn.p@gmail.com",
 //	"ddd": "856",
 //	"numero": "9995432199",
@@ -33,16 +33,10 @@ module.exports.listaAlunos = function(req, res){
         res.json(alunosEsp);
     }
     if(req.query.min_data&&req.query.max_data){
-        var alunosEsp = [];
-        //localhost:3000/api/alunos?min_data=20/07/1997&max_data=20/07/1997
-        for (var i = 0; i < alunos.length; i++) {
-            var mydate = new Date(alunos[i].dataNas);
-            var minData = new Date(req.query.min_data) 
-            var maxData = new Date(req.query.max_data)
-            if(mydate >= minData && mydate <= maxData){
-                alunosEsp.push(alunos[i]);
-            }
-        }
+        alunoEsp = alunos;
+        let minData = new Date(req.query.min_data);
+        let maxData = new Date(req.query.max_data);
+        alunoEsp = alunosEsp.filter((alunosEsp) => {return alunosEsp.dataNas.getTime() <= maxData.getTime() && alunosEsp.dataNas.getTime() >= minData.getTime()})
         res.json(alunosEsp);
     }
     else{

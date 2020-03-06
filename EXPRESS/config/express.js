@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const alunosRouter = require('../route/alunos.js');
 const campusRouter = require('../route/campus.js');
 const bodyParser = require('body-parser');
@@ -13,7 +14,7 @@ module.exports = function() {
     alunosRouter(app);
     campusRouter(app);
     app.get('*', (req, res) => {
-        res.sendfile(path.join(__dirname, '../public/index.html'));
+        res.sendfile(path.join(__dirname, '../public/Index.html'));
     });
     return app;
  };
